@@ -40,13 +40,17 @@ option(OPUS_INSTALL_PKG_CONFIG_MODULE "Install PkgConfig module" ON)
 option(OPUS_INSTALL_CMAKE_CONFIG_MODULE "Install CMake package config module"
        ON)
 
+if(APPLE)
+  option(BUILD_FRAMEWORK "Build Framework bundle for Apple systems" OFF)
+endif()
+
 include(opus_config.cmake)
 include(opus_sources.cmake)
 include(GNUInstallDirs)
 include(CMakeDependentOption)
 include(FeatureSummary)
 
-if(OPUS_BUILD_SHARED_LIBRARY OR BUILD_SHARED_LIBS)
+if(OPUS_BUILD_SHARED_LIBRARY OR BUILD_SHARED_LIBS OR BUILD_FRAMEWORK)
   # Global flag to cause add_library() to create shared libraries if on.
   set(BUILD_SHARED_LIBS ON)
   set(OPUS_BUILD_SHARED_LIBRARY ON)
@@ -389,6 +393,18 @@ if(COMPILER_SUPPORT_NEON AND OPUS_USE_NEON)
                                OPUS_ARM_PRESUME_NEON
                                OPUS_ARM_PRESUME_NEON_INTR)
   endif()
+endif()
+
+if(BUILD_FRAMEWORK)
+  set_target_properties(opus PROPERTIES
+    FRAMEWORK TRUE
+    FRAMEWORK_VERSION ${PROJECT_VERSION}
+    MACOSX_FRAMEWORK_IDENTIFIER org.xiph.opus
+    MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
+    MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
+    XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
+    OUTPUT_NAME Opus
+  )
 endif()
 
 install(TARGETS opus
