@@ -186,10 +186,6 @@ endif()
 
 feature_summary(WHAT ALL)
 
-add_library(opus ${opus_sources} ${opus_sources_float})
-
-add_library(Opus::opus ALIAS opus)
-
 set(Opus_PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_custom.h
@@ -197,6 +193,9 @@ set(Opus_PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_multistream.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_projection.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_types.h)
+
+add_library(opus ${opus_sources} ${opus_sources_float} ${Opus_PUBLIC_HEADER})
+add_library(Opus::opus ALIAS opus)
 
 set_target_properties(opus
                       PROPERTIES SOVERSION
