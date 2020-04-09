@@ -396,14 +396,13 @@ endif()
 
 if(BUILD_FRAMEWORK)
   set_target_properties(opus PROPERTIES
-    FRAMEWORK TRUE
-    FRAMEWORK_VERSION ${PROJECT_VERSION}
-    MACOSX_FRAMEWORK_IDENTIFIER org.xiph.opus
-    MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
-    MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
-    XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
-    OUTPUT_NAME Opus
-  )
+                        FRAMEWORK TRUE
+                        FRAMEWORK_VERSION ${PROJECT_VERSION}
+                        MACOSX_FRAMEWORK_IDENTIFIER org.xiph.opus
+                        MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${PROJECT_VERSION}
+                        MACOSX_FRAMEWORK_BUNDLE_VERSION ${PROJECT_VERSION}
+                        XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
+                        OUTPUT_NAME Opus)
 endif()
 
 install(TARGETS opus
